@@ -1,0 +1,21 @@
+#!/bin/sh
+# A quick 'n dirty wrapper around apt-get install / yum install / apk add
+set -eu
+HERE="$(cd "$(dirname "$0")"; pwd)"
+PATH="$HERE/bin:$PATH"
+
+if canhaz apt-get; then
+  export DEBIAN_FRONTEND=noninteractive
+  exec sudo apt install --yes --no-install-recommends "$@"
+elif canhaz yum; then
+  echo "TODO: support for yum distros" >&2
+  exec yum -y install "$@"
+elif canhaz apk; then
+  echo "TODO: support for alpine" >&2
+  exec apk add "$@"
+else
+  echo "TODO: support for non-apt distros" >&2
+  exit1
+fi
+
+

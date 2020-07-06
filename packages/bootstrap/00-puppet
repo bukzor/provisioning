@@ -1,0 +1,26 @@
+#!/bin/sh
+# At this stage, we can't assume anything. There's probably no puppet installed
+# We do presume a couple things currently:
+#   * A working /bin/sh
+#   * sudo installed and configured to allow us to run apt install (TODO)
+#   * debian buster (TODO)
+#
+# Future work:
+#   * no sudo / already root
+#   * redhat / centos
+#   * alpine toybox
+#   * debian stretch
+#   * ubuntu
+
+set -eu
+HERE="$(cd "$(dirname "$0")"; pwd)"
+export PATH="$HERE/bin:$PATH"
+
+export DEBIAN_FRONTEND=noninteractive
+
+set -x
+if canhaz puppet; then
+  : puppet already installed!
+else
+  pkg-install puppet
+fi

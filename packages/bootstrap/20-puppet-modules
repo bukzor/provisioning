@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+HERE="$(cd "$(dirname "$0")"; pwd)"
+TOP="$(cd "$HERE"/..; pwd)"
+MODULES="$TOP/venv/puppet-modules"
+
+set -x
+
+mkdir -p "$MODULES"
+cat $HERE/20-puppet-modules.list |
+  sed 's/#.*//' |
+  xargs -rt puppet module install --target-dir "$MODULES"

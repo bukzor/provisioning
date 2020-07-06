@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+for cmd in "$@"; do
+  command -v "$cmd" >/dev/null
+done
